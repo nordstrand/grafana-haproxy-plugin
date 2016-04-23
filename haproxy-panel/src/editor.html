@@ -1,0 +1,67 @@
+<div class="editor-row">
+  <div class="section gf-form-group">
+    <h5 class="section-heading">Haproxy options</h5>
+
+    <div class="gf-form">
+      <label class="gf-form-label width-8">Stats URL</label>
+      <input type="text" class="input-medium gf-form-input max-width-10" ng-model="ctrl.panel.haproxySettings.url" ng-change="ctrl.render()" ng-model-onblur>
+    </div>
+
+    <div class="gf-form">
+      <label class="gf-form-label width-8">Backend name</label>
+      <input type="text" class="input-medium gf-form-input max-width-10" ng-model="ctrl.panel.haproxySettings.backendName" ng-change="ctrl.render()" ng-model-onblur>
+    </div>
+
+    <div class="gf-form">
+      <label class="gf-form-label width-8">Server name</label>
+      <input type="text" class="input-medium gf-form-input max-width-10" ng-model="ctrl.panel.haproxySettings.serverName" ng-change="ctrl.render()" ng-model-onblur>
+    </div>
+
+    <gf-form-switch class="gf-form" label="Status" label-class="width-8" checked="ctrl.panel.haproxySettings.showStatus" on-change="ctrl.render()"></gf-form-switch>
+    <gf-form-switch class="gf-form" label="Weight" label-class="width-8" checked="ctrl.panel.haproxySettings.showWeight" on-change="ctrl.render()"></gf-form-switch>
+  </div>
+
+  <div class="section gf-form-group">
+    <h5 class="section-heading">Styling</h5>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">Bg Color</label>
+      <span class="max-width-10">
+        <spectrum-picker class="gf-form-input" ng-model="ctrl.panel.bgColor" ng-change="ctrl.render()" ></spectrum-picker>
+      </span>
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">Font Size</label>
+      <input type="text" class="input-small gf-form-input width-9" ng-model="ctrl.panel.timeSettings.fontSize" ng-change="ctrl.render()" ng-model-onblur />
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">Font Weight</label>
+      <span class="gf-form-select-wrapper max-width-9">
+        <select class="input-small gf-form-input " ng-model="ctrl.panel.timeSettings.fontWeight"
+                                                   ng-options="t for t in ['normal', 'bold']" ng-change="ctrl.render()"></select>
+      </span>
+    </div>
+  </div>
+
+  <div class="section gf-form-group" ng-if="ctrl.panel.mode === 'time'">
+    <h5 class="section-heading">Time format</h5>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">12 or 24 hour</label>
+      <div class="gf-form-select-wrapper max-width-9">
+        <select class="input-small gf-form-input" ng-model="ctrl.panel.clockType" ng-options="t for t in ['12 hour', '24 hour', 'custom']" ng-change="ctrl.render()"></select>
+      </div>
+    </div>
+    <div class="gf-form" ng-show="ctrl.panel.clockType === 'custom'">
+      <label class="gf-form-label width-9">Custom format</label>
+      <input type="text" class="input-small gf-form-input width-9" ng-model="ctrl.panel.timeSettings.customFormat" ng-change="ctrl.render()" ng-model-onblur />
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">Offset from UTC (hours)</label>
+      <input type="text" class="input-small gf-form-input max-width-9" placeholder="+/- hours" ng-model="ctrl.panel.offsetFromUtc" ng-change="ctrl.render()" ng-model-onblur />
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label width-9">Offset from UTC (mins)</label>
+      <input type="text" class="input-small gf-form-input max-width-9" placeholder="+/- minutes" ng-model="ctrl.panel.offsetFromUtcMinutes" ng-change="ctrl.render()" ng-model-onblur />
+    </div>
+  </div>
+
+</div>
