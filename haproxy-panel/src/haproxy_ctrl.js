@@ -6,15 +6,10 @@ import './css/clock-panel.css!';
 import { parseStatLine, parseStatsData } from './haproxy';
 
 const panelDefaults = {
-  mode: 'time',
   clockType: '24 hour',
   offsetFromUtc: null,
   offsetFromUtcMinutes: null,
   bgColor: null,
-  countdownSettings: {
-    endCountdownTime: moment().seconds(0).milliseconds(0).add(1, 'day').toDate(),
-    endText: '00:00:00'
-  },
   timeSettings: {
     customFormat: 'HH:mm:ss',
     fontSize: '60px',
@@ -35,13 +30,9 @@ export class HaproxyCtrl extends PanelCtrl {
     _.defaults(this.panel, panelDefaults);
     _.defaults(this.panel.timeSettings, panelDefaults.timeSettings);
 
-    if (!(this.panel.countdownSettings.endCountdownTime instanceof Date)) {
-      this.panel.countdownSettings.endCountdownTime = moment(this.panel.countdownSettings.endCountdownTime).toDate();
-    }
-
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
     this.events.on('panel-teardown', this.onPanelTeardown.bind(this));
-    this.updateClock();
+    this.update();
   }
 
   onInitEditMode() {
@@ -52,35 +43,33 @@ export class HaproxyCtrl extends PanelCtrl {
     this.$timeout.cancel(this.nextTickPromise);
   }
 
-  updateClock() {
-    if (this.panel.mode === 'time') {
-      this.renderTime();
-    } else {
-      this.renderCountdown();
-    }
+  update() {
+    this.renderPanel();
+    this.nextTickPromise = this.$timeout(this.update.bind(this), 1000);
+  }
 
-    this.nextTickPromise = this.$timeout(this.updateClock.bind(this), 1000);
+  renderPanel() {
+    $.get(this.panel.haproxySettings.url)
+    .done(this.renderStats.bind(this))
+    .done(this.renderTime.bind(this))
+    .fail((error) => { this.error = error; });
+
+    this.render();
+  }
+
+  renderStats(data) {
+    this.error = void 0;
+    var statsData = parseStatsData(data);
+    const svNameToMatch = this.panel.haproxySettings.serverName;
+    var backend = statsData.find(d => d.svname === svNameToMatch);
+
+    this.server = backend ? backend : {
+      svname: this.panel.haproxySettings.serverName,
+      status: 'Not found in Haproxy stats output'
+    };
   }
 
   renderTime() {
-      var that = this;
-    $.get(this.panel.haproxySettings.url)
-      .done(function( data ) { 
-        //console.log(data); 
-        that.error = void 0;
-        var statsData = parseStatsData(data);
-        var backend = statsData.find( d => { return d.svname === that.panel.haproxySettings.serverName });
-
-        that.server = backend ? backend : {
-          svname: that.panel.haproxySettings.serverName,
-          status: 'Not found in Haproxy stats output'
-        };
-    })
-    .fail(function(error) {
-      that.error = error;
-    });
-
-    console.log("DH")
     let now;
 
     if (this.panel.offsetFromUtc && this.panel.offsetFromUtcMinutes) {
@@ -93,7 +82,6 @@ export class HaproxyCtrl extends PanelCtrl {
     }
 
     this.time = now.format(this.getTimeFormat());
-    this.render();
   }
 
   getTimeFormat() {
