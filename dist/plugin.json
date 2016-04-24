@@ -1,0 +1,33 @@
+{
+  "type": "panel",
+  "name": "Haproxy",
+  "id": "grafana-haproxy-panel",
+
+  "info": {
+    "description": "Haproxy panel for grafana",
+    "author": {
+      "name": "Jonas Nordstrand",
+      "url": "http://github.com"
+    },
+    "keywords": ["haproxy", "panel"],
+    "logos": {
+      "small": "src/img/haproxy_panel_logo.svg",
+      "large": "src/img/haproxy_panel_logo.svg"
+    },
+    "links": [
+      {"name": "Project site", "url": "https://github.com/nordstrand/grafana-haproxy-plugin"},
+      {"name": "MIT License", "url": "https://github.com/nordstrand/grafana-haproxy-plugin/blob/master/haproxy-panel/LICENSE"}
+    ],
+    "screenshots": [
+      {"name": "Showcase", "path": "src/img/screenshot-showcase.png"},
+      {"name": "Options", "path": "src/img/screenshot-clock-options.png"}
+    ],
+    "version": "0.0.1",
+    "updated": "2015-04-23"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "3.x.x",
+    "plugins": [ ]
+  }
+}

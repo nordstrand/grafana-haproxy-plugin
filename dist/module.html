@@ -1,0 +1,11 @@
+<div class="clock-panel" ng-style="{height: ctrl.height}">
+  <h2 style="font-size: {{ctrl.panel.timeSettings.fontSize}}; font-weight: {{ctrl.panel.timeSettings.fontWeight}};">
+    {{ctrl.server.svname}}:
+    <span ng-if="ctrl.panel.haproxySettings.showStatus">{{ctrl.server.status}}</span>
+    <span ng-if="ctrl.panel.haproxySettings.showWeight">{{ctrl.server.weight}}</span>
+  </h2>
+  <span ng-if="ctrl.error">{{ctrl.error}}</span>
+  <div style="margin-left: auto; margin-right: 0;">
+    <span>{{ctrl.time}}</span>
+  </div>
+</div>

@@ -2,7 +2,7 @@ version: "2"
 
 services:
   revproxy:
-    build: ./revproxy/
+    build: ./docker/revproxy/
     container_name: revproxy
     ports:
       - "80:80"
@@ -11,7 +11,7 @@ services:
     image:  grafana/grafana:3.0.0-beta5
     container_name: grafana
     volumes:
-      - ./haproxy-panel:/var/lib/grafana/plugins
+      - .:/var/lib/grafana/plugins
     ports:
       - "3000:3000"
 
@@ -19,7 +19,7 @@ services:
     image: nginx
 
   haproxy:
-    build: ./haproxy/
+    build: ./docker/haproxy/
     container_name: haproxy
     links:
       - staticexample

@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/module.js"],"names":[],"mappings":";;;;;;AAAQ,iB,iBAAA,W;;;2BAGN,W","file":"module.js","sourcesContent":["import {HaproxyCtrl} from './haproxy_ctrl';\n\nexport {\n  HaproxyCtrl as PanelCtrl\n};\n"]}
